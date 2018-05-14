@@ -67,15 +67,15 @@ public class PeriodicScheduler implements Scheduler {
                     .stream()
                     .filter(w -> {
                         /*System.out.println(now);
-                        System.out.println(now.plusSeconds(computer.getBackupTimeInSeconds()));
-                        System.out.println( w.endsAfter(now.plusSeconds(computer.getBackupTimeInSeconds())));*/
-                        return w.endsAfter(now.plusSeconds(computer.getBackupTimeInSeconds()));
+                        System.out.println(now.plusSeconds(computer.getStoredData()));
+                        System.out.println( w.endsAfter(now.plusSeconds(computer.getStoredData())));*/
+                        return w.endsAfter(now.plusSeconds(computer.getBackupTime()));
 
                     })
                     .findAny()
                     .orElse(null);
             if (interval != null) {
-                DateTime backupEnd = now.plusSeconds(computer.getBackupTimeInSeconds());
+                DateTime backupEnd = now.plusSeconds(computer.getStoredData());
                 schedule.add(new Backup(computer, now, backupEnd));
                 now = backupEnd;
             }

@@ -3,7 +3,7 @@ package scheduler;
 import model.Backup;
 import model.Computer;
 import model.Failure;
-import model.Network;
+import model.SubNetwork;
 import org.joda.time.DateTime;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class DamageCounter {
 
     public static long count(List<Backup> backups,
                              List<Failure<Computer>> smallFailures,
-                             List<Failure<Network>> bigFailures,
+                             List<Failure<SubNetwork>> bigFailures,
                              DateTime startDate) {
 
         long smallFailureDamage = countSmallFailureDamage(backups,smallFailures,startDate);
@@ -40,7 +40,7 @@ public class DamageCounter {
         return damage[0];
     }
 
-    private static long countBigFailureDamage(List<Backup> backups, List<Failure<Network>> bigFailures, DateTime startDate) {
+    private static long countBigFailureDamage(List<Backup> backups, List<Failure<SubNetwork>> bigFailures, DateTime startDate) {
         Map<Computer, DateTime> lastBackup = new HashMap<>();
         final int[] i = {0, 1};
         final int[] damage = {0, 1};

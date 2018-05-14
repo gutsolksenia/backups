@@ -1,7 +1,7 @@
 package random;
 
 import model.BackupServer;
-import model.Network;
+import model.SubNetwork;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,11 +18,11 @@ public class RandomBackupServerFactory {
     public static BackupServer getBackupServer() {
         int size = RANDOM.nextInt(MAX_AMOUNT_OF_NETWORKS - MIN_AMOUNT_OF_NETWORKS) +
                 MIN_AMOUNT_OF_NETWORKS;
-        Collection<Network> networks = new ArrayList<>();
+        Collection<SubNetwork> subNetworks = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            networks.add(RandomNetworkFactory.getNetwork());
+            subNetworks.add(RandomNetworkFactory.getNetwork());
         }
-        return new BackupServer(networks);
+        return new BackupServer(subNetworks);
     }
 
 }

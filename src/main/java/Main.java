@@ -18,16 +18,13 @@ public class Main {
     private static final DateTime START_DATE = new DateTime(2018, 1, 1, 0, 0, 0, GregorianChronology.getInstance());
     private static final DateTime END_DATE = new DateTime(2018, 2, 1, 0, 0, 0, GregorianChronology.getInstance());
     private static final List<Failure<Computer>> SMALL_FAILURES;
-    private static final List<Failure<Network>> BIG_FAILURES;
+    private static final List<Failure<SubNetwork>> BIG_FAILURES;
 
     static {
         FailureFactory failureFactory = new FailureFactory(START_DATE, END_DATE);
         SMALL_FAILURES = failureFactory.getFailures(BACKUP_SERVER.getComputers(), 0.2);
-        BIG_FAILURES = failureFactory.getFailures(BACKUP_SERVER.getNetworks(), 0.0005);
+        BIG_FAILURES = failureFactory.getFailures(BACKUP_SERVER.getSubNetworks(), 0.0005);
     }
-
-
-
 
     public static void main(String[] args) {
         printResults(fourHoursScheduler(), "4 hours scheduler");

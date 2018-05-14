@@ -7,19 +7,19 @@ import java.util.Collection;
  * Created by ksenia on 14.12.17.
  */
 public class BackupServer {
-    private final Collection<Network> networks;
+    private final Collection<SubNetwork> subNetworks;
 
-    public BackupServer(Collection<Network> networks) {
-        this.networks = networks;
+    public BackupServer(Collection<SubNetwork> subNetworks) {
+        this.subNetworks = subNetworks;
     }
 
-    public Collection<Network> getNetworks() {
-        return networks;
+    public Collection<SubNetwork> getSubNetworks() {
+        return subNetworks;
     }
 
     public Collection<Computer> getComputers() {
-        return networks.stream()
-                .map(Network::getComputers)
+        return subNetworks.stream()
+                .map(SubNetwork::getComputers)
                 .collect(
                         ArrayList::new,
                         ArrayList::addAll,
