@@ -2,13 +2,10 @@ import model.*;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.chrono.GregorianChronology;
-import random.FailureFactory;
-import random.RandomBackupServerFactory;
-import scheduler.DamageCounter;
-import scheduler.PeriodicScheduler;
+import state.DataTransferSystem;
+import state.FailureFactory;
+import factory.RandomBackupServerFactory;
 import scheduler.Scheduler;
-
-import java.util.List;
 
 /**
  * Created by ksenia on 13.04.18.
@@ -17,14 +14,9 @@ public class Main {
     private static final BackupServer BACKUP_SERVER = RandomBackupServerFactory.getBackupServer();
     private static final DateTime START_DATE = new DateTime(2018, 1, 1, 0, 0, 0, GregorianChronology.getInstance());
     private static final DateTime END_DATE = new DateTime(2018, 2, 1, 0, 0, 0, GregorianChronology.getInstance());
-    private static final List<Failure<Computer>> SMALL_FAILURES;
-    private static final List<Failure<SubNetwork>> BIG_FAILURES;
+    private static final FailureFactory<Computer> COMPUTER_FAILURE_FACTORY = new FailureFactory<>(0.0001, BACKUP_SERVER.getComputers());
+    private static final FailureFactory<SubNetwork> SUB_NETWORK_FAILURE_FACTORY = new FailureFactory<>(0.00001, BACKUP_SERVER.getSubNetworks());
 
-    static {
-        FailureFactory failureFactory = new FailureFactory(START_DATE, END_DATE);
-        SMALL_FAILURES = failureFactory.getFailures(BACKUP_SERVER.getComputers(), 0.2);
-        BIG_FAILURES = failureFactory.getFailures(BACKUP_SERVER.getSubNetworks(), 0.0005);
-    }
 
     public static void main(String[] args) {
         printResults(fourHoursScheduler(), "4 hours scheduler");
@@ -50,8 +42,13 @@ public class Main {
     }
 
     private static void printResults(Scheduler scheduler, String shedulerName) {
-        List<Backup> schedule = scheduler.generateSchedule(START_DATE, END_DATE);
-        long damage = DamageCounter.count(schedule, SMALL_FAILURES, BIG_FAILURES, START_DATE);
+        DataTransferSystem dts = new DataTransferSystem(
+                scheduler,
+                COMPUTER_FAILURE_FACTORY,
+                SUB_NETWORK_FAILURE_FACTORY,
+                START_DATE,
+                END_DATE);
+        long damage = dts.countDamage();
         System.out.println(shedulerName + ": " + damage);
     }
 }

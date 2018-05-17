@@ -4,21 +4,21 @@ package model;
  * Created by ksenia on 23.04.18.
  */
 public class Channel {
-    private final Computer from;
-    private final Computer to;
+    private final SubNetwork from;
+    private final SubNetwork to;
     private final int speed;
 
-    public Channel(Computer from, Computer to, int speed) {
+    public Channel(SubNetwork from, SubNetwork to, int speed) {
         this.from = from;
         this.to = to;
         this.speed = speed;
     }
 
-    public Computer getFrom() {
+    public SubNetwork getFrom() {
         return from;
     }
 
-    public Computer getTo() {
+    public SubNetwork getTo() {
         return to;
     }
 

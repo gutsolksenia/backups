@@ -7,7 +7,7 @@ import java.util.Collection;
  */
 public class SubNetwork {
     private final int backupSpeed;
-    private Collection<Computer> computers;
+    private final Collection<Computer> computers;
 
     public SubNetwork(int backupSpeed, Collection<Computer> computers) {
         this.backupSpeed = backupSpeed;

@@ -1,29 +1,25 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by ksenia on 14.12.17.
  */
 public class BackupServer {
-    private final Collection<SubNetwork> subNetworks;
+    private final List<SubNetwork> subNetworks;
 
-    public BackupServer(Collection<SubNetwork> subNetworks) {
+    public BackupServer(List<SubNetwork>subNetworks) {
         this.subNetworks = subNetworks;
     }
 
-    public Collection<SubNetwork> getSubNetworks() {
+    public List<SubNetwork> getSubNetworks() {
         return subNetworks;
     }
 
-    public Collection<Computer> getComputers() {
+    public List<Computer> getComputers() {
         return subNetworks.stream()
-                .map(SubNetwork::getComputers)
-                .collect(
-                        ArrayList::new,
-                        ArrayList::addAll,
-                        ArrayList::addAll
-                );
+                .flatMap(subNetwork -> subNetwork.getComputers().stream())
+                .collect(Collectors.toList());
     }
 }

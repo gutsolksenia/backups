@@ -9,9 +9,8 @@ import java.util.List;
 public class Computer {
     private int storedData;
     private final Double importance = 0.001;
-    private Collection<BackupInterval> backupIntervals;
+    private final Collection<BackupInterval> backupIntervals;
     private final SubNetwork subNetwork;
-    private List<Channel> connections;
 
     public Computer(int storedData, Collection<BackupInterval> backupIntervals, SubNetwork subNetwork) {
         this.storedData = storedData;
@@ -36,13 +35,5 @@ public class Computer {
 
     public Double getImportance() {
         return importance;
-    }
-
-    public List<Channel> getConnections() {
-        return connections;
-    }
-
-    public void setConnections(List<Channel> connections) {
-        this.connections = connections;
     }
 }
