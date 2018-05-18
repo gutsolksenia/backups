@@ -1,5 +1,6 @@
 package state;
 
+import model.BackupServer;
 import model.Computer;
 import org.joda.time.DateTime;
 
@@ -15,10 +16,10 @@ public class BackupServerState {
     private final DateTime startDate;
     private final Map<Computer, ComputerState>  computersStates;
 
-    public BackupServerState(DateTime time, List<Computer> computers) {
+    public BackupServerState(DateTime time, BackupServer backupServer) {
         this.startDate = time;
         this.time = time;
-        computersStates = computers.stream()
+        computersStates = backupServer.getComputers().stream()
                 .collect(Collectors.toMap(
                       Function.identity(),
                       computer -> new ComputerState(computer, startDate)
@@ -26,7 +27,7 @@ public class BackupServerState {
     }
 
     public void updateTime() {
-        time.plusMinutes(TIME_STEP_IN_MINUTES);
+        time = time.plusMinutes(TIME_STEP_IN_MINUTES);
     }
 
     public DateTime getNow() {
@@ -40,7 +41,8 @@ public class BackupServerState {
     }
 
     public DateTime getLastBackupDate(Computer computer) {
-        return computersStates.get(computer).getLastCompleteBackup();
+        DateTime date =  computersStates.get(computer).getLastCompleteBackup();
+        return date == null ? startDate : date; //TODO
     }
 
     private void updateState(Computer computer, int backupedDataAmount) {

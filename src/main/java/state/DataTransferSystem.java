@@ -20,6 +20,7 @@ public class DataTransferSystem {
     public DataTransferSystem(Scheduler scheduler,
                               FailureFactory<Computer> computerFailureFactory,
                               FailureFactory<SubNetwork> subNetworkFailureFactory,
+                              BackupServerState backupServerState,
                               DateTime startDate,
                               DateTime endDate) {
         this.scheduler = scheduler;
@@ -27,7 +28,7 @@ public class DataTransferSystem {
         this.subNetworkFailureFactory = subNetworkFailureFactory;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.backupServerState = new BackupServerState(startDate);
+        this.backupServerState = backupServerState;
     }
 
     public long countDamage() {
@@ -38,6 +39,7 @@ public class DataTransferSystem {
     }
 
     private void step() {
+        //System.out.println(backupServerState.getNow());
         backupServerState.updateTime();
         updateDamage();
         backupServerState.doBackup(scheduler.getNext());

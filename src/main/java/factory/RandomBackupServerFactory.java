@@ -12,8 +12,8 @@ import java.util.List;
 public class RandomBackupServerFactory {
     public static BackupServer getBackupServer() {
         int size = IntRandom.nextInt(
-                Constants.MAX_SUB_NETWORKS_COUNT,
-                Constants.MIN_SUB_NETWORKS_COUNT);
+                Constants.MIN_SUB_NETWORKS_COUNT,
+                Constants.MAX_SUB_NETWORKS_COUNT);
         List<SubNetwork> networks = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             networks.add(RandomSubNetworkFactory.getSubNetwork());
