@@ -1,12 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by ksenia on 14.12.17.
  */
-public class Computer {
+public class Computer implements Serializable {
     private int storedData;
     private final Double importance = 0.001;
     private final Collection<BackupInterval> backupIntervals;

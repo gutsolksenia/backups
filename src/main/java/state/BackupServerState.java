@@ -1,24 +1,28 @@
 package state;
 
 import model.BackupServer;
+import model.Channel;
 import model.Computer;
 import org.joda.time.DateTime;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BackupServerState {
-    private static final int TIME_STEP_IN_MINUTES = 1;
+    private static final int TIME_STEP_IN_MINUTES = 100;
 
     private DateTime time;
     private final DateTime startDate;
     private final Map<Computer, ComputerState>  computersStates;
+    private final BackupServer backupServer;
 
     public BackupServerState(DateTime time, BackupServer backupServer) {
         this.startDate = time;
         this.time = time;
+        this.backupServer = backupServer;
         computersStates = backupServer.getComputers().stream()
                 .collect(Collectors.toMap(
                       Function.identity(),
@@ -26,6 +30,9 @@ public class BackupServerState {
                 ));
     }
 
+    public Collection<Computer> getComputers() {
+        return  computersStates.keySet();
+    }
     public void updateTime() {
         time = time.plusMinutes(TIME_STEP_IN_MINUTES);
     }
@@ -56,8 +63,8 @@ public class BackupServerState {
         state.setDataToBackup(dataToBackup);
     }
 
-    private int getBackupSpeed(Computer computer) {
-        //TODO
+    public int getBackupSpeed(Computer computer) {
+        List<List<Channel>> path = computer.getSubNetwork().
         return 1;
     }
 

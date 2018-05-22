@@ -4,10 +4,12 @@ package model;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
+import java.io.Serializable;
+
 /**
  * Created by ksenia on 12.04.18.
  */
-public class BackupInterval {
+public class BackupInterval implements Serializable {
     private final Period start;
     private final Period end;
 

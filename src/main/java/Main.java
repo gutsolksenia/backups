@@ -1,39 +1,57 @@
+import data.BackupServersHolder;
+import evolution.Evolution;
 import model.*;
 import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.joda.time.chrono.GregorianChronology;
 import scheduler.PeriodicScheduler;
+import scheduler.PriorityScheduler;
 import state.BackupServerState;
 import state.DataTransferSystem;
 import state.FailureFactory;
-import factory.RandomBackupServerFactory;
 import scheduler.Scheduler;
 
 /**
  * Created by ksenia on 13.04.18.
  */
 public class Main {
-    private static final BackupServer BACKUP_SERVER = RandomBackupServerFactory.getBackupServer();
-    private static final DateTime START_DATE = new DateTime(2018, 1, 1, 0, 0, 0, GregorianChronology.getInstance());
-    private static final DateTime END_DATE = new DateTime(2018, 1, 2, 0, 0, 0, GregorianChronology.getInstance());
-    private static final FailureFactory<Computer> COMPUTER_FAILURE_FACTORY = new FailureFactory<>(0.0001, BACKUP_SERVER.getComputers());
-    private static final FailureFactory<SubNetwork> SUB_NETWORK_FAILURE_FACTORY = new FailureFactory<>(0.00001, BACKUP_SERVER.getSubNetworks());
-
     public static void main(String[] args) {
-        Scheduler simpleScheduler = new PeriodicScheduler(BACKUP_SERVER.getComputers());
-        printResults(simpleScheduler, "simple scheduler");
+        Evolution evolution = new Evolution();
+        System.out.println(evolution.evolve().getMaxFlowConst());
     }
 
+ /*   private static DataTransferSystem getSimpleDTS() {
+        BackupServerState backupServerState = initialState();
+        Scheduler scheduler = new PeriodicScheduler(BACKUP_SERVER.getComputers());
+        return getDTS(scheduler, backupServerState);
+    }
 
-    private static void printResults(Scheduler scheduler, String shedulerName) {
-        DataTransferSystem dts = new DataTransferSystem(
-                scheduler,
-                COMPUTER_FAILURE_FACTORY,
-                SUB_NETWORK_FAILURE_FACTORY,
-                new BackupServerState(START_DATE, BACKUP_SERVER),
-                START_DATE,
-                END_DATE);
+    private static DataTransferSystem getPriorityDTS() {
+        BackupServerState backupServerState = initialState();
+        Scheduler scheduler = new PriorityScheduler(
+                1.1, 1.1, 1.1, 1.1, backupServerState, BACKUP_SERVER.getComputers()
+        );
+        return getDTS(scheduler, backupServerState);
+    }
+
+    private static void printResults(DataTransferSystem dts, String shedulerName) {
         long damage = dts.countDamage();
         System.out.println(shedulerName + ": " + damage);
     }
+
+    private static BackupServerState initialState() {
+        return new BackupServerState(START_DATE, BACKUP_SERVER);
+    }
+
+    private static DataTransferSystem getDTS(
+            Scheduler scheduler,
+            BackupServerState initialState
+    ) {
+        return new DataTransferSystem(
+                scheduler,
+                COMPUTER_FAILURE_FACTORY,
+                SUB_NETWORK_FAILURE_FACTORY,
+                initialState,
+                START_DATE,
+                END_DATE);
+    }*/
 }
