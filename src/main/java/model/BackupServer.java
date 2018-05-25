@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,12 @@ public class BackupServer implements Serializable {
 
     public List<SubNetwork> getSubNetworks() {
         return subNetworks;
+    }
+
+    public List<Channel> getChannels() {
+        return subNetworks.stream()
+                .flatMap(subNetwork -> subNetwork.getChannels().stream())
+                .collect(Collectors.toList());
     }
 
     public List<Computer> getComputers() {

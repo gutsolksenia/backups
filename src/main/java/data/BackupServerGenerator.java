@@ -12,7 +12,6 @@ public class BackupServerGenerator {
             BackupServer server = RandomBackupServerFactory.getBackupServer();
             BackupServerSerializer.serialize(server, getFilename(i));
         }
-
     }
 
     public static String getFilename(int serverId) {

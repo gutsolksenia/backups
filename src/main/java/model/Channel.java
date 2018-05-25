@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Created by ksenia on 23.04.18.
  */
-public class Channel {
+public class Channel implements Serializable {
     private final SubNetwork from;
     private final SubNetwork to;
     private final int speed;
