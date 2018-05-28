@@ -1,12 +1,11 @@
 package state;
 
+import flow.Flow;
 import model.BackupServer;
-import model.Channel;
 import model.Computer;
 import org.joda.time.DateTime;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -23,7 +22,8 @@ public class BackupServerState {
     public BackupServerState(DateTime time, BackupServer backupServer) {
         this.startDate = time;
         this.time = time;
-        this.flow = new Flow(backupServer.getChannels());
+        this.flow = new Flow();
+
         computersStates = backupServer.getComputers().stream()
                 .collect(Collectors.toMap(
                       Function.identity(),
@@ -66,6 +66,6 @@ public class BackupServerState {
     }
 
     public int getBackupSpeed(Computer computer) {
-        return flow.maxFlow(computer.getSubNetwork());
+        return flow.ge;
     }
 }

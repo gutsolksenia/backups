@@ -1,5 +1,8 @@
 package model;
 
+import flow.Edge;
+import flow.Node;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,10 +11,9 @@ import java.util.List;
 /**
  * Created by ksenia on 12.04.18.
  */
-public class SubNetwork implements Serializable {
+public class SubNetwork extends Node implements Serializable{
     private final int backupSpeed;
     private final Collection<Computer> computers;
-    private final List<Channel> channels = new ArrayList<>(); //TODO
 
     public SubNetwork(int backupSpeed, Collection<Computer> computers) {
         this.backupSpeed = backupSpeed;
@@ -27,6 +29,6 @@ public class SubNetwork implements Serializable {
     }
 
     public List<Channel> getChannels() {
-        return channels;
+        return super.getEdgesFrom();
     }
 }
